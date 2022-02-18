@@ -3,24 +3,24 @@ public class Main {
     final static String HUMAN = "😕";  // Human
     final static String ZOMBIE = "🤢";  // Zombie
 
-    static void zombieAttack(String[][] map, int x, int y) {
+    static void zombieAttack(String[][] map, int line, int column) {
 
-        if (x < 0 || y < 0 || x >= map.length || y >= map.length) {
+        if (line < 0 || column < 0 || line >= map.length || column >= map[0].length) {
             return;  // base case: outside the "map"
         }
 
-        if (!map[x][y].equals(HUMAN)) {
+        if (!map[line][column].equals(HUMAN)) {
             return;  // base case: found non human (zombie or cat)
         }
 
-        map[x][y] = ZOMBIE;
+        map[line][column] = ZOMBIE;
 
         showMap(map);
 
-        zombieAttack(map, x - 1, y); // left
-        zombieAttack(map, x + 1, y); // right
-        zombieAttack(map, x, y - 1); // up
-        zombieAttack(map, x, y + 1); // down
+        zombieAttack(map, line, column - 1); // left
+        zombieAttack(map, line, column + 1); // right
+        zombieAttack(map, line - 1, column); // up
+        zombieAttack(map, line + 1, column); // down
     }
 
     public static void main(String[] args) {
@@ -34,7 +34,7 @@ public class Main {
                 { "😕","😕","😕","😕","😕","😕","😕"}
         };
 
-        zombieAttack(map, 6, 6);
+        zombieAttack(map, 6, 6);  // start in the lower right corner
     }
 
     static void showMap(String[][] map) {
@@ -47,7 +47,7 @@ public class Main {
         }
 
         for (int line = 0; line < map.length; line++) {
-            for (int column = 0; column < map.length; column++) {
+            for (int column = 0; column < map[line].length; column++) {
                 System.out.print(map[line][column]);
             }
             System.out.println();
